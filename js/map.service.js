@@ -1,16 +1,28 @@
-import {storageService} from './storage-service.js';
+import { storageService } from './storage-service.js';
+import { Location } from './location-preview.js';
 
 const KEY_LOCATIONS = 'user_locations'
-var gLocations;
+var gLocations = storageService.loadFromStorage(KEY_LOCATIONS) || []
 
 const KEY_API_LOCATION = "user_search"
 var gApiLocation;
 
-
-
 export const mapService = {
-    getSearchLocation,
+    getLocationBy,
     getMyLocation,
+    setNewLocation
+}
+
+function setNewLocation(location) {
+    let locationWeather = 'weather soon!';
+
+    mapService.getLocationBy('coor', location.lat, location.lng)
+        .then(res => {
+            let locationInfo = res[0].formatted_address
+            let locationSave = new Location(locationInfo, locationWeather, location.lat, location.lng)
+            gLocations.push(locationSave)
+            storageService.saveToStorage(KEY_LOCATIONS ,gLocations)
+        })
 }
 
 
@@ -20,34 +32,12 @@ function getMyLocation() {
     })
 }
 
-
-function getSearchLocation() {
-    let gitUsers = storageService.loadFromStorage(KEY_API_LOCATION) || []
-    if (gitUsers && gitUsers.length) {
-        gGitUsers = gitUsers;
-        storageService.saveToStorage(GIT_USERS_KEY, gGitUsers)
-        getUsersRepository();
-        return;
+function getLocationBy(getBy, lat, lng) {
+    if (getBy === 'coor') {
+        return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyATABptZsA3DuWoaROhAiTYdEEIUJ743Pc`)
+            .then(res => res.data.results)
+    } else if (getBy === 'name') {
+        return axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=jerusalem&key=AIzaSyATABptZsA3DuWoaROhAiTYdEEIUJ743Pc')
+            .then(res => res.data.results)
     }
-
-    axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=jerusalem&key=AIzaSyDpw1AT3xL57va9uSK8SgMhqaFJMl--G-s')
-        .then(res => res.data.results)
-        .then(console.log)
-        // .then(results => {
-        //     gitUsers = results
-        //     gGitUsers = gitUsers;
-        //     saveToStorage(KEY_API_LOCATION, gApiLocation)
-        //     getUsersRepository();
-        // })
-
-        axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=31.768319,lng: 35.21371&key=AIzaSyDpw1AT3xL57va9uSK8SgMhqaFJMl--G-s')
-        .then(res => res.data.results)
-        .then(console.log)
-        // .then(results => {
-        //     gitUsers = results
-        //     gGitUsers = gitUsers;
-        //     saveToStorage(KEY_API_LOCATION, gApiLocation)
-        //     getUsersRepository();
-        // })
 }
-

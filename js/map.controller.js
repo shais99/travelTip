@@ -1,14 +1,15 @@
 
 import { mapService } from './map.service.js';
-import { Location } from './location-preview.js'
 // This is our controller it is responsible for rendering the view and action upon events
 // console.log(mapService);
 
 window.addEventListener('load', onInit)
 
 function onInit() {
-    // mapService.getSearchLocation()
+    // mapService.getLocationBy('name')
+    // .then (saveToSt)
 
+    // checkUrlLocation();
     mapService.getMyLocation()
         .then(pos => {
             var crd = pos.coords;
@@ -17,6 +18,9 @@ function onInit() {
     bindEvents()
 }
 
+function checkUrlLocation() {
+    // if (getParameterByName('lat'))
+}
 
 function bindEvents() {
     // document.querySelector('header select').addEventListener('change', onSetLang);
@@ -39,11 +43,20 @@ function renderMap(latLang) {
         let clickedLng = mapsMouseEvent.latLng.toJSON().lng;
         location = { lat: clickedLat, lng: clickedLng }
         marker = new google.maps.Marker({ position: location, map });
-        let weather = 'soon weather...';
-        let info = 'soon info...';
-        let l1 = new Location(info, weather, location.lat, location.lng)
-        console.log(l1);
         
+        mapService.setNewLocation(location)
+
         renderMap(location)
     })
+}
+
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
