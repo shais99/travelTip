@@ -2,6 +2,9 @@ import { mapService } from './map.service.js';
 import { Location } from './location-preview.js';
 // This is our controller it is responsible for rendering the view and action upon events
 
+export const mapController = {
+    renderSavedLocations
+}
 
 window.addEventListener('load', onInit)
 
@@ -38,17 +41,20 @@ function renderMap(latLang) {
 
     var marker = new google.maps.Marker({ position: location, map });
 
+    renderLocation()
+    renderSavedLocations()
+
     map.addListener('click', (mapsMouseEvent) => {
         let clickedLat = mapsMouseEvent.latLng.toJSON().lat;
         let clickedLng = mapsMouseEvent.latLng.toJSON().lng;
         location = { lat: clickedLat, lng: clickedLng }
         marker = new google.maps.Marker({ position: location, map });
-
+    
         mapService.addNewLocation(location)
-
-        renderMap(location)
+        .then(res => {
+            renderMap(location)
+        })
     })
-    renderLocation()
 
 }
 
@@ -86,6 +92,6 @@ function renderSavedLocations() {
 
 
 function renderLocation(){
-    let currLoc = getCurrLoc()
-    document.querySelector('.curr-location span').innerHTML = currLoc
+    let currLoc = mapService.getCurrLoc()
+    document.querySelector('.curr-location span').innerHTML = currLoc.info
 }
