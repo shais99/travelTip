@@ -11,7 +11,8 @@ export const mapService = {
     addNewAddress,
     gLocations,
     deleteLocation,
-    updateLocation
+    updateLocation,
+    getCurrLoc,
 }
 
 function deleteLocation(id) {
@@ -67,4 +68,8 @@ function getLocationBy(getBy, lat, lng, address) {
         return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${addressClean}&key=AIzaSyATABptZsA3DuWoaROhAiTYdEEIUJ743Pc`)
             .then(res => res.data.results)
     }
+}
+
+function getCurrLoc(){
+    return gLocations[gLocations.length - 1]
 }

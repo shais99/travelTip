@@ -48,6 +48,8 @@ function renderMap(latLang) {
 
         renderMap(location)
     })
+    renderLocation()
+
 }
 
 
@@ -82,7 +84,8 @@ function renderSavedLocations() {
     })
 }
 
+
 function renderLocation(){
     let currLoc = getCurrLoc()
-    document.querySelector('.curr-location span');
+    document.querySelector('.curr-location span').innerHTML = currLoc
 }
