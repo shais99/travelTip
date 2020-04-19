@@ -32,12 +32,24 @@
     <div id="map"></div>
 
     <section class="my-locations-container container flex wrap">
-        
+
     </section>
 
+    <div class="modal">
+        <div class="screen"></div>
+        <div class="details-modal">
+            <button class="close-modal">X</button>
+            <h2>Update <span></span></h2>
+            <form class="update-location-form">
+                <input type="text" value="" />
+                <button>Submit</button>
+            </form>
+        </div>
+    </div>
 
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3LyOQ8tGZCuzYZgEcHGaHnap5wlC_lC0"
+
+    <script src="lib/swal.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3LyOQ8tGZCuzYZgEcHGaHnap5wlC_lC0"
         type="text/javascript">
         </script>
     <script src="lib/axios.js"></script>

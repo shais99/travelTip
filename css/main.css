@@ -119,7 +119,6 @@ button {
 .single-location {
     background-color: #f5f6fa;
     width: 18%;
-    height: 200px;
     border-radius: 10px;
     padding: 10px;
     transition: .5s;
@@ -161,6 +160,77 @@ button {
 
 .update-location:hover {
     background-color: #44bd32;
+}
+
+/* MODAL */
+
+.screen {
+    background-color: black;
+    width: 100vw;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.6;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+}
+
+.details-modal {
+    background-color: white;
+    width: 30vw;
+    height: 200px;
+    margin: 0px auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 39px 5px rgba(0, 0, 0, 0.75);
+    text-align: center;
+}
+
+.close-modal {
+    background-color: #fe1a00;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    margin: 7px;
+    color: white;
+}
+
+@media (max-width: 1080px) {
+    .container {
+        width: 880px;
+    }
+}
+
+@media (max-width: 880px) {
+    .container {
+        width: 640px;
+    }
+    .main-header .container {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .logo {
+        margin-bottom: 20px;
+    }
+    .search-form {
+        margin-bottom: 20px;
+    }
+    .my-location-btn {
+        height: 30px;
+    }
 }
 
 /* HELPERS */

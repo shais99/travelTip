@@ -3,7 +3,8 @@ import { Location } from './location-preview.js';
 // This is our controller it is responsible for rendering the view and action upon events
 
 export const mapController = {
-    renderSavedLocations
+    renderSavedLocations,
+    onOpenUpdateModal
 }
 
 window.addEventListener('load', onInit)
@@ -15,11 +16,31 @@ function onInit() {
     renderSavedLocations()
 }
 
+function onCloseModal() {
+    document.querySelector('.modal').style.display = 'none';
+}
+
+function onOpenUpdateModal(locationId) {
+    document.querySelector('.modal').style.display = 'block';
+    
+    let locationIdx = mapService.gLocations.findIndex(location => {
+        return locationId === location.id;
+    })
+    document.querySelector('.details-modal h2 span').innerText = mapService.gLocations[locationIdx].info;
+    
+    let updateInput = document.querySelector('.update-location-form input');
+    updateInput.value = mapService.gLocations[locationIdx].info
+
+    document.querySelector('.update-location-form').addEventListener('submit', (locationId, event) => {
+        onUpdateLocation(locationIdx, updateInput.value);
+    })
+}
+
 function onGetMyLocation() {
     mapService.getMyLocation()
         .then(pos => {
             var crd = pos.coords;
-            addNewLocation({ lat: crd.latitude, lng: crd.longitude })
+            mapService.addNewLocation({ lat: crd.latitude, lng: crd.longitude })
             renderMap({ lat: crd.latitude, lng: crd.longitude })
         })
 }
@@ -36,6 +57,13 @@ function bindEvents() {
     document.querySelector('.search-form').addEventListener('submit', onSearchAddress);
     document.querySelector('.search-btns.my-location-btn').addEventListener('click', onGetMyLocation);
     document.querySelector('.copy-location-btn').addEventListener('click', onCopyLocetion);
+    document.querySelector('.screen').addEventListener('click', onCloseModal);
+    document.querySelector('.close-modal').addEventListener('click', onCloseModal);
+}
+
+function onUpdateLocation(id, newName) {
+    event.preventDefault();
+    mapService.updateLocation(id, newName);
 }
 
 function onCopyLocetion(){
@@ -116,5 +144,6 @@ function renderSavedLocations() {
 
 function renderLocation(){
     let currLoc = mapService.getCurrLoc()
+    if(!currLoc) return;
     document.querySelector('.curr-location span').innerHTML = currLoc.info
 }
