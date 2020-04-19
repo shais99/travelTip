@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>travelTip - Eliyahu & Shaiz</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body onload="onInit()">
+
+    <header class="main-header">
+        <div class="container flex space-between">
+            <h1 class="logo"><a href="index.html">travelTip</a></h1>
+
+            <form class="search-form flex">
+                <input type="text" class="search-input" placeholder="Search Location..." />
+                <button class="search-btns my-location-btn">My Location</button>
+                <button class="search-btns search-btn">Search</button>
+            </form>
+        </div>
+    </header>
+
+    <section class="location-container flex justify-center align-center">
+        <div class="curr-location">
+            <span class="font-bold">Location:</span> Raanan'a, Israel
+        </div>
+        <button class="copy-location-btn">Copy Location</button>
+    </section>
+
+    <section id="map">
+        
+    </section>
+
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3LyOQ8tGZCuzYZgEcHGaHnap5wlC_lC0&callback=initMap" type="text/javascript">
+    </script>
+    <script src="lib/axios.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
