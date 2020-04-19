@@ -1,4 +1,4 @@
-// import {mapService} from './map.service.js';
+import {mapService} from './map.service.js';
 
 // This is our controller it is responsible for rendering the view and action upon events
 // console.log(mapService);
@@ -6,6 +6,8 @@
 window.addEventListener('load', onInit)
 
 function onInit() {
+    // mapService.getSearchLocation()
+
     getMyLocation()
     bindEvents()
 }
@@ -30,12 +32,12 @@ function error(err) {
 }
 
 function renderMap(latLang) {
-    // The location of Uluru
+
     var location = latLang;
-    // The map, centered at Uluru
+
     var map = new google.maps.Map(
         document.getElementById('map'), { zoom: 16, center: location });
-    // The marker, positioned at Uluru
+
     var marker = new google.maps.Marker({ position: location, map: map });
 }
 
