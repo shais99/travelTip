@@ -10,7 +10,7 @@
 
 <body onload="onInit()">
 
-    <header class="main-header">
+    <header class="main-header flex">
         <div class="container flex space-between">
             <h1 class="logo"><a href="index.html">travelTip</a></h1>
 
@@ -29,10 +29,20 @@
         <button class="copy-location-btn">Copy Location</button>
     </section>
 
-    <main class="container">
-        <div id="map"></div>
+    <div id="map"></div>
 
-    </main>
+    <section class="my-locations-container container flex wrap">
+        <div class="single-location flex column">
+            <p>Id: myId()</p>
+            <p>Name of the location is here!</p>
+            <p>Weather is here!</p>
+
+            <div class="single-location-actions flex column align-center">
+                <button class="delete-location location-btns">Delete</button>
+                <button class="update-location location-btns">Update</button>
+            </div>
+        </div>
+    </section>
 
 
     <script async defer
