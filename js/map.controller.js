@@ -1,5 +1,6 @@
 
 import { mapService } from './map.service.js';
+import { Location } from './location-preview.js';
 // This is our controller it is responsible for rendering the view and action upon events
 // console.log(mapService);
 
@@ -15,6 +16,7 @@ function onInit() {
             var crd = pos.coords;
             renderMap({ lat: crd.latitude, lng: crd.longitude })
         })
+    renderSavedLocations()
     bindEvents()
 }
 
@@ -26,6 +28,7 @@ function bindEvents() {
     // document.querySelector('header select').addEventListener('change', onSetLang);
     // document.querySelector('.filter-by-status').addEventListener('change', onSetFilter);
     // document.querySelector('.btn-add').addEventListener('click', onAddTodo);
+    // document.querySelector('.delete-location').addEventListener('click', onDeleteLocation);
 }
 
 
@@ -43,9 +46,8 @@ function renderMap(latLang) {
         let clickedLng = mapsMouseEvent.latLng.toJSON().lng;
         location = { lat: clickedLat, lng: clickedLng }
         marker = new google.maps.Marker({ position: location, map });
-        
-        mapService.setNewLocation(location)
 
+        mapService.setNewLocation(location)
         renderMap(location)
     })
 }
@@ -59,4 +61,16 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function renderSavedLocations() {
+    if (!mapService.gLocations || !mapService.gLocations.length) {
+        document.querySelector('.my-locations-container').innerHTML = `<h2>No Saved Locations!</h2>`;
+    }
+    mapService.gLocations.forEach(location => {
+        let locationPreview = new Location(location.info, location.weather, location.lat, location.lng)
+        const elLocation = locationPreview.render();
+        
+        document.querySelector('.my-locations-container').appendChild(elLocation);
+    })
 }

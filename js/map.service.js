@@ -4,13 +4,22 @@ import { Location } from './location-preview.js';
 const KEY_LOCATIONS = 'user_locations'
 var gLocations = storageService.loadFromStorage(KEY_LOCATIONS) || []
 
-const KEY_API_LOCATION = "user_search"
-var gApiLocation;
-
 export const mapService = {
     getLocationBy,
     getMyLocation,
-    setNewLocation
+    setNewLocation,
+    gLocations,
+    deleteLocation,
+    updateLocation
+}
+
+function deleteLocation(id) {
+    console.log('popo');
+}
+
+function updateLocation(id) {
+    
+    console.log('popoUpdate');
 }
 
 function setNewLocation(location) {
