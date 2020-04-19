@@ -69,6 +69,7 @@ button {
 
 .search-btn {
     background-color: #ffa600;
+    margin-right: 10px;
 }
 
 .search-btn:hover {
@@ -78,7 +79,6 @@ button {
 
 .my-location-btn {
     background-color: #e17055;
-    margin-right: 10px;
 }
 
 .my-location-btn:hover {

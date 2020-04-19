@@ -1,10 +1,9 @@
-const KEY_LOCATIONS = 'user_locations'
-var gLocations;
+export const mapService = {
+    getMyLocation
+}
 
-
-
-// export const mapService = {
-//     getLocation,
-//     success,
-//     error,
-// }
+function getMyLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    })
+}
