@@ -71,7 +71,7 @@ function onUpdateLocation(id, newName) {
 function onCopyLocetion() {
     let currLoc = mapService.getCurrLoc()
     let addLatLang = `lat=${currLoc.lat}&lng=${currLoc.lng}`
-    let url = `http://127.0.0.1:5500/index.html?${addLatLang}`
+    let url = `https://shais99.github.io/travelTip/index.html?${addLatLang}`
     alert('Copied!')
     copyText(url)
 }
