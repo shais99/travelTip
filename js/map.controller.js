@@ -11,7 +11,7 @@ window.addEventListener('load', onInit)
 
 function onInit() {
     // checkUrlLocation();
-    checkUrlLocation() 
+    checkUrlLocation()
     bindEvents()
     renderSavedLocations()
 }
@@ -22,12 +22,12 @@ function onCloseModal() {
 
 function onOpenUpdateModal(locationId) {
     document.querySelector('.modal').style.display = 'block';
-    
+
     let locationIdx = mapService.gLocations.findIndex(location => {
         return locationId === location.id;
     })
     document.querySelector('.details-modal h2 span').innerText = mapService.gLocations[locationIdx].info;
-    
+
     let updateInput = document.querySelector('.update-location-form input');
     updateInput.value = mapService.gLocations[locationIdx].info
 
@@ -49,7 +49,7 @@ function checkUrlLocation() {
     let lat = getParameterByName('lat')
     let lng = getParameterByName('lng')
 
-    if (lat && lng) renderMap({lat: parseFloat(lat), lng: parseFloat(lng) });
+    if (lat && lng) renderMap({ lat: parseFloat(lat), lng: parseFloat(lng) });
     else onGetMyLocation()
 }
 
@@ -64,13 +64,15 @@ function bindEvents() {
 function onUpdateLocation(id, newName) {
     event.preventDefault();
     mapService.updateLocation(id, newName);
+    onCloseModal();
+    renderSavedLocations();
 }
 
-function onCopyLocetion(){
+function onCopyLocetion() {
     let currLoc = mapService.getCurrLoc()
     let addLatLang = `lat=${currLoc.lat}&lng=${currLoc.lng}`
     let url = `http://127.0.0.1:5500/index.html?${addLatLang}`
-    console.log(url)
+    alert('Copied!')
     copyText(url)
 }
 
@@ -83,7 +85,7 @@ function copyText(copyText) {
     textArea.remove();
 }
 
-function renderMap(latLang) {    
+function renderMap(latLang) {
     var location = latLang;
 
     var map = new google.maps.Map(
@@ -101,11 +103,11 @@ function renderMap(latLang) {
         let clickedLng = mapsMouseEvent.latLng.toJSON().lng;
         location = { lat: clickedLat, lng: clickedLng }
         marker = new google.maps.Marker({ position: location, map });
-    
+
         mapService.addNewLocation(location)
-        .then(res => {
-            renderMap(location)
-        })
+            .then(res => {
+                renderMap(location)
+            })
     })
 
 }
@@ -142,8 +144,8 @@ function renderSavedLocations() {
 }
 
 
-function renderLocation(){
+function renderLocation() {
     let currLoc = mapService.getCurrLoc()
-    if(!currLoc) return;
+    if (!currLoc) return;
     document.querySelector('.curr-location span').innerHTML = currLoc.info
 }

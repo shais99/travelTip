@@ -36,7 +36,7 @@ function addNewLocation(location) {
             let locationInfo = res[0].formatted_address
             let locationSave = new Location(locationInfo, locationWeather, location.lat, location.lng)
             gLocations.push(locationSave)
-            storageService.saveToStorage(KEY_LOCATIONS ,gLocations)
+            storageService.saveToStorage(KEY_LOCATIONS, gLocations)
             return location;
         })
 }
@@ -50,7 +50,7 @@ function addNewAddress(address) {
             let locationCurr = res[0].geometry.location
             let locationSave = new Location(locationInfo, locationWeather, locationCurr.lat, locationCurr.lng)
             gLocations.push(locationSave)
-            storageService.saveToStorage(KEY_LOCATIONS ,gLocations)
+            storageService.saveToStorage(KEY_LOCATIONS, gLocations)
             return locationCurr
         })
 }
@@ -73,6 +73,6 @@ function getLocationBy(getBy, lat, lng, address) {
     }
 }
 
-function getCurrLoc(){
+function getCurrLoc() {
     return gLocations[gLocations.length - 1]
 }

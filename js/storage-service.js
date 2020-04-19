@@ -1,5 +1,3 @@
-'use strict';
-
 export const storageService = {
     saveToStorage,
     loadFromStorage,
@@ -16,5 +14,5 @@ function loadFromStorage(key) {
 }
 
 function removeFromLocalStorage(key) {
-    localStorage.removeItem(key)    
+    localStorage.removeItem(key)
 }
