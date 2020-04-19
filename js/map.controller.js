@@ -10,7 +10,7 @@ window.addEventListener('load', onInit)
 
 function onInit() {
     // checkUrlLocation();
-    onGetMyLocation()
+    checkUrlLocation() 
     bindEvents()
     renderSavedLocations()
 }
@@ -19,21 +19,43 @@ function onGetMyLocation() {
     mapService.getMyLocation()
         .then(pos => {
             var crd = pos.coords;
+            addNewLocation({ lat: crd.latitude, lng: crd.longitude })
             renderMap({ lat: crd.latitude, lng: crd.longitude })
         })
 }
 
 function checkUrlLocation() {
-    // if (getParameterByName('lat'))
+    let lat = getParameterByName('lat')
+    let lng = getParameterByName('lng')
+
+    if (lat && lng) renderMap({lat: parseFloat(lat), lng: parseFloat(lng) });
+    else onGetMyLocation()
 }
 
 function bindEvents() {
     document.querySelector('.search-form').addEventListener('submit', onSearchAddress);
     document.querySelector('.search-btns.my-location-btn').addEventListener('click', onGetMyLocation);
+    document.querySelector('.copy-location-btn').addEventListener('click', onCopyLocetion);
 }
 
-function renderMap(latLang) {
-    
+function onCopyLocetion(){
+    let currLoc = mapService.getCurrLoc()
+    let addLatLang = `lat=${currLoc.lat}&lng=${currLoc.lng}`
+    let url = `http://127.0.0.1:5500/index.html?${addLatLang}`
+    console.log(url)
+    copyText(url)
+}
+
+function copyText(copyText) {
+    var textArea = document.createElement("textarea");
+    textArea.value = copyText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("Copy");
+    textArea.remove();
+}
+
+function renderMap(latLang) {    
     var location = latLang;
 
     var map = new google.maps.Map(
