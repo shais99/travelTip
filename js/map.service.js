@@ -10,7 +10,16 @@ var gApiLocation;
 
 export const mapService = {
     getSearchLocation,
+    getMyLocation,
 }
+
+
+function getMyLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    })
+}
+
 
 function getSearchLocation() {
     let gitUsers = storageService.loadFromStorage(KEY_API_LOCATION) || []
