@@ -1,4 +1,5 @@
 import { mapService } from './map.service.js';
+import { Location } from './location-preview.js';
 // This is our controller it is responsible for rendering the view and action upon events
 
 
@@ -16,6 +17,8 @@ function onGetMyLocation() {
             var crd = pos.coords;
             renderMap({ lat: crd.latitude, lng: crd.longitude })
         })
+    renderSavedLocations()
+    bindEvents()
 }
 
 function checkUrlLocation() {
@@ -66,4 +69,15 @@ function onSearchAddress(ev) {
         .then(res =>{
             renderMap({lat: res.lat , lng: res.lng});
         })
+}
+function renderSavedLocations() {
+    if (!mapService.gLocations || !mapService.gLocations.length) {
+        document.querySelector('.my-locations-container').innerHTML = `<h2>No Saved Locations!</h2>`;
+    }
+    mapService.gLocations.forEach(location => {
+        let locationPreview = new Location(location.info, location.weather, location.lat, location.lng)
+        const elLocation = locationPreview.render();
+        
+        document.querySelector('.my-locations-container').appendChild(elLocation);
+    })
 }
