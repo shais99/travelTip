@@ -1,10 +1,10 @@
 import { makeRandId } from "./utils.js";
 import { mapService } from "./map.service.js";
+import { mapController } from "./map.controller.js";
 
 export class Location {
-    static id = makeRandId();
     constructor(info, weather, lat, lng) {
-        this.id = Location.id;
+        this.id = makeRandId();
         this.info = info;
         this.weather = weather;
         this.lat = lat;
@@ -28,10 +28,12 @@ export class Location {
         locationContainer.querySelector('.update-location').addEventListener('click', this.onUpdate);
         return locationContainer
     }
-    onDelete() {
+    onDelete = () => {
         mapService.deleteLocation(this.id);
+        mapController.renderSavedLocations();
     }
     onUpdate() {
         mapService.updateLocation(this.id);
+        mapController.renderSavedLocations();
     }
 }

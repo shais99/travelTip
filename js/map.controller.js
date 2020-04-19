@@ -2,6 +2,9 @@ import { mapService } from './map.service.js';
 import { Location } from './location-preview.js';
 // This is our controller it is responsible for rendering the view and action upon events
 
+export const mapController = {
+    renderSavedLocations
+}
 
 window.addEventListener('load', onInit)
 
@@ -72,7 +75,6 @@ function onSearchAddress(ev) {
         })
 }
 function renderSavedLocations() {
-    let elLocationsContainer = document.querySelector('.my-locations-container').innerHTML = '';
     if (!mapService.gLocations || !mapService.gLocations.length) {
         document.querySelector('.my-locations-container').innerHTML = `<h2>No Saved Locations!</h2>`;
     }

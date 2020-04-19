@@ -15,7 +15,7 @@ export const mapService = {
 }
 
 function deleteLocation(id) {
-    console.log(id)
+    console.log('DELETED')
 }
 
 function updateLocation(id) {
