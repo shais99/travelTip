@@ -3,8 +3,8 @@ import { mapService } from "./map.service.js";
 import { mapController } from "./map.controller.js";
 
 export class Location {
-    constructor(info, weather, lat, lng) {
-        this.id = makeRandId();
+    constructor(info, weather, lat, lng, id = makeRandId()) {
+        this.id = id;
         this.info = info;
         this.weather = weather;
         this.lat = lat;
