@@ -32,8 +32,8 @@ export class Location {
         mapService.deleteLocation(this.id);
         mapController.renderSavedLocations();
     }
-    onUpdate() {
-        mapService.updateLocation(this.id);
+    onUpdate = () => {
+        mapController.onOpenUpdateModal(this.id)
         mapController.renderSavedLocations();
     }
 }

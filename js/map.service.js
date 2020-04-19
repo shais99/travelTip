@@ -23,10 +23,9 @@ function deleteLocation(locationId) {
     storageService.saveToStorage(KEY_LOCATIONS, gLocations)
 }
 
-function updateLocation(locationId) {
-    console.log(gLocations);
-    
-    console.log('popoUpdate');
+function updateLocation(locationIdx, newName) {
+    gLocations[locationIdx].info = newName;
+    storageService.saveToStorage(KEY_LOCATIONS, gLocations)
 }
 
 function addNewLocation(location) {
@@ -47,7 +46,6 @@ function addNewAddress(address) {
 
     return mapService.getLocationBy('name', undefined, undefined, address)
         .then(res => {
-            console.log(res)
             let locationInfo = res[0].formatted_address
             let locationCurr = res[0].geometry.location
             let locationSave = new Location(locationInfo, locationWeather, locationCurr.lat, locationCurr.lng)
