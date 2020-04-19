@@ -15,7 +15,7 @@ export const mapService = {
 }
 
 function deleteLocation(id) {
-    console.log('popo');
+    console.log(id)
 }
 
 function updateLocation(id) {
@@ -32,7 +32,7 @@ function addNewLocation(location) {
             let locationSave = new Location(locationInfo, locationWeather, location.lat, location.lng)
             gLocations.push(locationSave)
             storageService.saveToStorage(KEY_LOCATIONS ,gLocations)
-            return location
+            return location;
         })
 }
 

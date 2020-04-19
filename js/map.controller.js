@@ -17,8 +17,6 @@ function onGetMyLocation() {
             var crd = pos.coords;
             renderMap({ lat: crd.latitude, lng: crd.longitude })
         })
-    renderSavedLocations()
-    bindEvents()
 }
 
 function checkUrlLocation() {
@@ -46,9 +44,12 @@ function renderMap(latLang) {
         marker = new google.maps.Marker({ position: location, map });
 
         mapService.addNewLocation(location)
-
+        .then(res => {
+            renderSavedLocations()
+        })
         renderMap(location)
     })
+    renderSavedLocations()
 }
 
 
@@ -71,6 +72,7 @@ function onSearchAddress(ev) {
         })
 }
 function renderSavedLocations() {
+    let elLocationsContainer = document.querySelector('.my-locations-container').innerHTML = '';
     if (!mapService.gLocations || !mapService.gLocations.length) {
         document.querySelector('.my-locations-container').innerHTML = `<h2>No Saved Locations!</h2>`;
     }
