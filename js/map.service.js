@@ -14,11 +14,16 @@ export const mapService = {
     updateLocation
 }
 
-function deleteLocation(id) {
-    console.log('DELETED')
+function deleteLocation(locationId) {
+    let locationIdx = gLocations.findIndex(location => {
+        return locationId === location.id;
+    })
+    gLocations.splice(locationIdx, 1)
+    storageService.saveToStorage(KEY_LOCATIONS, gLocations)
 }
 
-function updateLocation(id) {
+function updateLocation(locationId) {
+    console.log(gLocations);
     
     console.log('popoUpdate');
 }

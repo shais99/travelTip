@@ -32,13 +32,15 @@ function bindEvents() {
 }
 
 function renderMap(latLang) {
-
+    
     var location = latLang;
 
     var map = new google.maps.Map(
         document.getElementById('map'), { zoom: 16, center: location });
 
     var marker = new google.maps.Marker({ position: location, map });
+    renderSavedLocations()
+
 
     map.addListener('click', (mapsMouseEvent) => {
         let clickedLat = mapsMouseEvent.latLng.toJSON().lat;
@@ -47,12 +49,10 @@ function renderMap(latLang) {
         marker = new google.maps.Marker({ position: location, map });
 
         mapService.addNewLocation(location)
-        .then(res => {
-            renderSavedLocations()
-        })
-        renderMap(location)
+            .then(res => {
+                renderMap(location)
+            })
     })
-    renderSavedLocations()
 }
 
 
@@ -70,18 +70,18 @@ function onSearchAddress(ev) {
     ev.preventDefault();
     let inputVal = document.querySelector('.search-form .search-input').value;
     mapService.addNewAddress(inputVal)
-        .then(res =>{
-            renderMap({lat: res.lat , lng: res.lng});
+        .then(res => {
+            renderMap({ lat: res.lat, lng: res.lng });
         })
 }
+
 function renderSavedLocations() {
-    if (!mapService.gLocations || !mapService.gLocations.length) {
-        document.querySelector('.my-locations-container').innerHTML = `<h2>No Saved Locations!</h2>`;
-    }
-    mapService.gLocations.forEach(location => {
-        let locationPreview = new Location(location.info, location.weather, location.lat, location.lng)
+    let elMyLocationsContainer = document.querySelector('.my-locations-container');
+    elMyLocationsContainer.innerHTML = '';
+    mapService.gLocations.forEach((location, idx) => {
+        let locationPreview = new Location(location.info, location.weather, location.lat, location.lng, mapService.gLocations[idx].id)
         const elLocation = locationPreview.render();
-        
+
         document.querySelector('.my-locations-container').appendChild(elLocation);
     })
 }
